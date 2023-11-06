@@ -1,6 +1,6 @@
 const httpServer = require("./src/app");
 const { conn } = require("./src/db");
-const PORT = process.env.DB_PORT;
+const PORT = 5432;
 
 conn
   .sync({ force: false })
