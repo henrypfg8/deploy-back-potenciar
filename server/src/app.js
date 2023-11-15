@@ -12,7 +12,7 @@ require("./db.js");
 const server = express();
 server.name = "API";
 const httpServer = createServer(server);
-const io = new Server(httpServer);
+const io = new Server(httpServer,{pingInterval: 10000});
 global.io = io;
 
 io.on("connection", (socket) => {
@@ -29,8 +29,8 @@ server.use(morgan("dev"));
 server.use((_req, res, next) => {
   res.header(
     "Access-Control-Allow-Origin",
-    "http://localhost:5432",
-    'https://potenciar-solidario.vercel.app/'
+    "http://localhost:19789",
+    "http://localhost:5173"
   ); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(

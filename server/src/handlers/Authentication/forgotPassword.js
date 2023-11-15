@@ -33,7 +33,7 @@ const forgotPassword = async (req, res) => {
         }
         const otp = await Otp.create({email: email, token: token})
 
-        let verificationLink = `https://potenciar-solidario.vercel.app/new-password/?token=${token}`;
+        let verificationLink = `http://localhost:5173/new-password/?token=${token}`;
         emailForgotPassword(user,verificationLink)
 
         return res.status(200).json("Se ha enviado un correo electrónico para restablecer su contraseña");
