@@ -1,4 +1,7 @@
 const { User } = require("../../db");
+const {userBanNoti} = require("../../handlers/emailNotif/UserBan");
+const {reactivationAccount} = require("../../handlers/emailNotif/reactivationAccount")
+
 
 const updateUser = async (id, userData) => {
   try {
@@ -7,7 +10,7 @@ const updateUser = async (id, userData) => {
     if (!user) throw new Error("Usuario no encontrado");
 
     user.name = userData.name;
-    user.lastName = userData.lastName;
+    user.lastname = userData.lastname;
     user.email = userData.email;
     user.description = userData.description;
     user.DNI = userData.DNI;
@@ -19,10 +22,28 @@ const updateUser = async (id, userData) => {
     user.geographical_area_residence = userData.geographical_area_residence;
     user.admin = userData.admin;
     user.password = userData.password;
+    user.organization = userData.organization;
+
+    const userActivePrevious = user.active
+
+    user.active = userData.active; 
 
     await user.save();
-    
+
+    if(userActivePrevious !== user.active){
+
+      if(user.active === false){
+
+        userBanNoti(user.email)
+
+      }else {
+        reactivationAccount(user.email)
+      }
+      
+    }
+
     return user;
+
   } catch (error) {
     throw new Error("Error actualizar el usuario", error);
   }

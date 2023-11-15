@@ -27,7 +27,7 @@ module.exports = (sequelize) => {
       },
       description: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       DNI: {
         type: DataTypes.INTEGER,
@@ -41,12 +41,13 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       phone: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: true,
+     
       },
       organization: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       profile_picture: {
         type: DataTypes.STRING,
@@ -67,6 +68,11 @@ module.exports = (sequelize) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      active: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+        allowNull: true,
       },
     },
     { timestamps: false }

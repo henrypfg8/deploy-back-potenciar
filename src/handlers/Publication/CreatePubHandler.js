@@ -1,4 +1,5 @@
 const {CreatePublication} = require("../../controllers/Publication/CreatePublication");
+const {Category} = require('../../db.js');
 
 const createPublicationHandler = async (req, res) => {
     const {
@@ -18,11 +19,28 @@ const createPublicationHandler = async (req, res) => {
          likes 
     } = req.body;
 
-    //const userId = req.userId;
-    //console.log(`este es el user id ${userId}`); 
+    const userId = req.userId;
+    console.log(`este es el user id ${userId}`); 
+
+
 
     try {
+        //console.log(category)
+        const categorySearch = await Category.findOne({ where: { name: category } });
+        if(categorySearch === null){
+            throw new Error("No se encontro la categoria en la BD")
+        }
+        //console.log(categorySearch)
+        let categoryId = null;
+        if(categorySearch){
+            categoryId = categorySearch.id;
+            //console.log(categoryId)
+        }
+        
+       
+
         if (!title || !description || !category || !contact || !organization)
+            //console.log(`titulo ${title} descripcion ${description} categoria ${category} contacto ${contact} organizacion ${organization}`)
             throw new Error("Faltan campos obligatorios");
 
         const publication = await CreatePublication({
@@ -41,7 +59,8 @@ const createPublicationHandler = async (req, res) => {
             registrationLink,
             contact,
             likes, 
-            //userID:userId
+            userID:userId,
+            categoryId:categoryId
         });
 
         res.status(201).json(publication);
