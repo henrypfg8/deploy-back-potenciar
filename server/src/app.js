@@ -8,6 +8,7 @@ const { createServer } = require("http");
 const { Server } = require("socket.io");
 const {authHandler} = require("./handlers/Authentication/authHandler"); //middleware para proteccion de rutas
 require("./db.js");
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME,FRONT_HOST } = process.env;
 
 const server = express();
 server.name = "API";
@@ -29,8 +30,8 @@ server.use(morgan("dev"));
 server.use((_req, res, next) => {
   res.header(
     "Access-Control-Allow-Origin",
-    "http://localhost:19789",
-    "http://localhost:5173"
+    DB_HOST,
+    FRONT_HOST
   ); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
