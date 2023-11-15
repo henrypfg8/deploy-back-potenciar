@@ -29,7 +29,7 @@ server.use(morgan("dev"));
 server.use((_req, res, next) => {
   res.header(
     "Access-Control-Allow-Origin",
-    "http://localhost:19789",
+    "http://localhost:5432",
     'https://potenciar-solidario.vercel.app/'
   ); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Credentials", "true");
