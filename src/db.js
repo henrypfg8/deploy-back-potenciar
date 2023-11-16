@@ -5,7 +5,7 @@ const fs = require("fs");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME } = process.env;
 
 // conexion con a tu base de datos
-const sequelize = new Sequelize('postgres://default:u85QMrijoFZO@ep-misty-lake-40066786.us-east-1.postgres.vercel-storage.com:5432/verceldb',{
+const sequelize = new Sequelize('postgres://potenciar_solidario_xqd6_user:ECBOtW2OreJkf1e7wHqf2p1LS4R8UNi7@dpg-clap23e16hkc739d6ce0-a.oregon-postgres.render.com/potenciar_solidario_xqd6',{
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
   ssl:true,
