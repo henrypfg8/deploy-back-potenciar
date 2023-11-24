@@ -3,7 +3,7 @@ const httpServer = require("./src/app");
 const { conn } = require("./src/db");
 
 // Definición del puerto a utilizar, obtenido de las variables de entorno
-const PORT = process.env.DB_PORT;
+const PORT = 5432;
 
 // Sincronización de la base de datos y inicio del servidor
 conn

@@ -35,6 +35,7 @@ server.use(morgan("dev"));
 server.use((_req, res, next) => {
   res.header(
     "Access-Control-Allow-Origin",
+    "https://potenciar-solidario.onrender.com/",
     "https://deploy-front-potenciar.vercel.app/"
   ); // Actualizar para que coincida con el dominio desde el cual se realizará la solicitud
   res.header("Access-Control-Allow-Credentials", "true");
