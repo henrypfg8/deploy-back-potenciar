@@ -77,7 +77,7 @@ const {CreateReviewHandler} = require('../handlers/Reviews/CreateReviewH.js')
 const {DeleteReviewHandler} = require('../handlers/Reviews/DeleteReviewH.js')
 
 const {forgotPassword} = require('../handlers/Authentication/forgotPassword.js')
-const {resetPassword} = require('../handlers/Authentication/resetpassword.js')
+const {resetPassword} = require('../handlers/Authentication/resetPassword.js')
 const router = Router();
 
 router.get("/posts/busqueda", searchPublication);
