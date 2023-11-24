@@ -1,10 +1,11 @@
+// Configuración de la conexión a la base de datos utilizando variables de entorno
 require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const path = require("path");
 const fs = require("fs");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME } = process.env;
 
-// conexion con a tu base de datos
+// Creación de una instancia de Sequelize con la información de la conexión
 const sequelize = new Sequelize('postgres://potenciar_solidario_xqd6_user:ECBOtW2OreJkf1e7wHqf2p1LS4R8UNi7@dpg-clap23e16hkc739d6ce0-a.oregon-postgres.render.com/potenciar_solidario_xqd6',{
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
@@ -18,6 +19,7 @@ const sequelize = new Sequelize('postgres://potenciar_solidario_xqd6_user:ECBOtW
 
 const basename = path.basename(__filename);
 
+// Lectura y carga dinámica de modelos desde la carpeta 'models'
 const modelDefiners = [];
 
 //usamos filesystem para extraer de la carpeta models el nombre de cada modelo y pushearlo al array modelDefiners
@@ -59,14 +61,14 @@ const {
 } = sequelize.models;
 
 //Relacion de modelos
-
+// Definición de relaciones entre modelos utilizando Sequelize's associations
 User.hasMany(Publication, { foreignKey: "userID" });
 User.hasMany(Question, { foreignKey: "userId" });
 User.hasMany(Answer, { foreignKey: "userId" });
 User.hasMany(Review, { foreignKey: "userId" });
 Publication.belongsTo(User, { foreignKey: "userID" });
 Publication.belongsTo(Category, { foreignKey: "categoryId" });
-Publication.hasMany(Review, { foreignKey: "publicationId" });
+Publication.hasMany(Review, { onDelete: 'CASCADE', foreignKey: "publicationId" });
 Category.hasMany(Publication, { foreignKey: "categoryId" });
 Category.hasMany(Question, { foreignKey: "categoryId" });
 Review.belongsTo(Publication, { foreignKey: "publicationId" });
@@ -87,15 +89,15 @@ ForoCategories.hasMany(Question, { foreignKey: "categoryId" })
 
 Like.belongsTo(Publication, { foreignKey: "publicationId" });
 Like.belongsTo(User, { foreignKey: "userId" });
-Publication.hasMany(Like, { foreignKey: "publicationId" });
+Publication.hasMany(Like, { onDelete: 'CASCADE', foreignKey: "publicationId" });
 
 // COMENTARIOS DE PUBLICACIONES 
 PublicationComment.belongsTo(Publication, { foreignKey: 'publicationId' });
 PublicationComment.belongsTo(User, { foreignKey: 'userId' });
-Publication.hasMany(PublicationComment, { foreignKey: 'publicationId' });
+Publication.hasMany(PublicationComment, {onDelete: 'CASCADE', foreignKey: 'publicationId' });
 User.hasMany(PublicationComment, { foreignKey: 'userId' });
 
-
+// Exportación de modelos y la conexión para su uso en otras partes de la aplicación
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { pool } = require('./db.js');
